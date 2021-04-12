@@ -14,8 +14,7 @@
         
     Step 2:
         Install or update Pip ( pip -V ) <-- in terminal or cmd prompt/ps
-        Now install pipenv ( pip install --user pipenv ) for easy Virtual Enviroments 
-        and easily install our dependancys.
+        install pipenv ( pip install --user pipenv ) for easy Virtual Enviroments to easily install our dependancys.
             NOTE:                        _-^
                 This does a user installation to prevent breaking any system-wide packages. 
                 If pipenv isn’t available in your shell after installation, 
