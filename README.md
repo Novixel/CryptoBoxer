@@ -1,5 +1,45 @@
 # BitcoinBoxer
-    The "Bitcoin Boxer" is a custom built crypto currency trading algorithm 
-    designed to trade automaticly on the Coinbase Pro Exchange. 
+    The "Bitcoin Boxer"! 
     
-    Created by Novixel Development Solutions &amp; Simon!
+    A custom built crypto currency trading algorithm designed to trade automaticly on the Coinbase Pro Exchange.
+    
+    Designed by Simon
+    Created by Novixel Development Solutions - Built by Novixel
+    
+    
+    Step 1:
+        Insure that python is installed on your system ( python -V ) <-- in terminal or cmd prompt/ps
+        Update if needed (Try python3 -V ) before attempting to install a new version
+        
+        
+    Step 2:
+        Install or update Pip ( pip -V ) <-- in terminal or cmd prompt/ps
+        Now install pipenv ( pip install --user pipenv ) for easy Virtual Enviroments and easily install our dependancys.
+            NOTE:                        _-^
+                This does a user installation to prevent breaking any system-wide packages. 
+                If pipenv isn’t available in your shell after installation, 
+                you’ll need to add the user base’s binary directory to your PATH.
+        
+        
+    Step 3:
+        Place all the files from this repo in to a folder, 
+        then open up your terminal/cmdprompt and navigate to the folder you just placed the files in, by
+        ( cd myfolder )<-- in terminal or cmd prompt/ps
+        Now Install dependancys
+        ( pipenv install )<-- in terminal or cmd prompt/ps
+        
+    
+    Step 4:
+        Run 'boxer.py' with python3 ( python3 boxer.py )<-- in terminal or cmd prompt/ps
+        
+    Step 5:
+        Enter Your Api Key, 
+        Enter Your Api Secret,
+        Enter Your Api Passphrase,
+        
+        How many Test loops?, loop forever with 0 but dont recommend
+        1 or 2 should be fine
+        
+        Now Watch The Magic Happen!!
+        
+        
