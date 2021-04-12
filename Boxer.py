@@ -1,4 +1,4 @@
-# Novixel's The Crypto Boxer 
+# Novixel's Crypto Boxer 
 # Version 0.01
 # April 7, 2021
 #
@@ -13,7 +13,7 @@ import cbpro
 import time
 import os 
 
-product_id = "BTC-USDC" # Temp
+product_id = "BTC-EUR" # Change ME To the pair you would like to watch
 LEFTA, RIGHTA = product_id.split("-")
 
 isoNow = datetime.datetime.now().isoformat() 
@@ -41,7 +41,7 @@ def updateTick():
 
 def StartLoop(x):
     count = 0
-    while x > 0 or x < 0: # Forever Loop if -1
+    while x > 0 or x < 0: # Forever Loop if 0
         x -= 1
         count += 1
         
