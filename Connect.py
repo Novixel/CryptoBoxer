@@ -4,17 +4,19 @@ import os
 from time import sleep
 
 class CoinConnect:
-
-    auth = None
-
     def __init__(self): # Set up
 
+        print("\nCoinConnecting...\n")
+
+        sleep(0.33)
         cfg.BuildBotNest() # Build directory for our data and config files
 
         if os.path.isfile(cfg.pathStr): # if file is a file! We continue
+            print("Config File Found!")
             sleep(0.33)
         else: 
-            print("\nConfig File Not Found!\nBuilding Setup File!\n") # else: we make a file
+            print("File Not Found!\nBuilding Setup File!\n") # else: we make a file
+            sleep(0.33)
             cfg.BuildBotSettings()
             print("The Config File Was Created!\n")
 
