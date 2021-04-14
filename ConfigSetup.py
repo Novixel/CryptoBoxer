@@ -8,6 +8,8 @@ import os
 from pathlib import Path
 from configparser import ConfigParser
 
+product_id = "BTC-USDC" # temp
+
 # Lets build a few configurable setting for the program!
 
 # Step 1 (Build Directory)
@@ -42,6 +44,14 @@ def BuildBotSettings():
         "ask" : "48115.5",
         "volume" : "1691.61862457"
     }
+    config_object["DAYSTATS"] = {
+        "open": "6745.00000000", 
+        "high": "7292.11000000", 
+        "low": "6650.00000000", 
+        "volume": "26185.51325269", 
+        "last": "6813.19000000", 
+        "volume_30day": "1019451.11188405"
+    }
     config_object["LEFTACCOUNT"] = {
         'id': 'Coin account id', 
         'currency': 'BTC', 
@@ -59,6 +69,13 @@ def BuildBotSettings():
         'available': '100.00', 
         'profile_id': 'profile id', 
         'trading_enabled': "True"
+    }
+    config_object["LASTTRADE"] = {
+        "time": "2014-11-07T22:19:28.578544Z",
+        "trade_id": "74",
+        "price": "10.00000000",
+        "size": "0.01000000",
+        "side": "buy"
     }
     #Write to a file!!
     with open(pathStr,'w') as conf:
@@ -105,6 +122,24 @@ def SaveTicker(x , d ):
     with open(pathStr, 'w') as conf:
         c.write(conf)
 
+def SaveDay(x , d ):
+    c = ConfigParser()
+    c.read(pathStr)
+    #Get the api from config
+    DAY = c["DAYSTATS"]
+    DAY[str(x)] = d
+    with open(pathStr, 'w') as conf:
+        c.write(conf)
+
+def SaveTrade(x , d ):
+    c = ConfigParser()
+    c.read(pathStr)
+    #Get the api from config
+    Trade = c["LASTTRADE"]
+    Trade[str(x)] = d
+    with open(pathStr, 'w') as conf:
+        c.write(conf)
+
 # Step 4 (Read That Config File)
 # Read the file and assign variables to the values
 def ReadConfig(x):
@@ -113,14 +148,16 @@ def ReadConfig(x):
     c.read(pathStr)
     #Get Info from config
     API = c["API"]
-    # seperate the info for use
-    if x == "key":
-        return API[x]
-    if x == "b64secret":
-        return API["b64secret"]
-    if x == "passphrase":
-        return API["passphrase"]
+    return API[x]
+    
 # 100th line for out config file markinfo = c["MARKETINFO"]
+def ReadLASTTRADE(x):
+    """x = 'price',etc """
+    c = ConfigParser()
+    c.read(pathStr)
+    #Get Info from config
+    LASTTRADE = c["LASTTRADE"]
+    return LASTTRADE[x]
 
 def ReadTICKER(x):
     """x = 'price',etc """
@@ -129,6 +166,14 @@ def ReadTICKER(x):
     #Get Info from config
     TICKER = c["TICKER"]
     return TICKER[x]
+
+def ReadDAYSTATS(x):
+    """x = 'open',etc """
+    c = ConfigParser()
+    c.read(pathStr)
+    #Get Info from config
+    DAY = c["DAYSTATS"]
+    return DAY[x]
 
 def ReadLEFTaccount(x):
     """x = 'available',etc """

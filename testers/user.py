@@ -1,13 +1,14 @@
-import cbpro
 import ConfigSetup as cfg
-import os
+from cbpro import AuthenticatedClient
 from time import sleep
+import os
 
-class CoinConnect:
-
+class User:
+    product_id = str
     auth = None
 
-    def __init__(self): # Set up
+    def __init__(self):
+        self.product_id = input("Please Enter You're Selected Currency Pair.\n") or "BTC-USDC" #Default is btc-usdc
 
         cfg.BuildBotNest() # Build directory for our data and config files
 
@@ -28,4 +29,4 @@ class CoinConnect:
             secret = cfg.ReadConfig("b64secret")
             passphrase = cfg.ReadConfig("passphrase")
 
-        self.auth = cbpro.AuthenticatedClient(key,secret,passphrase)
+        self.auth = AuthenticatedClient(key,secret,passphrase)
