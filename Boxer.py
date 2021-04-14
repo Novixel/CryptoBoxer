@@ -1,4 +1,4 @@
-# Novixel's Crypto Boxer 
+# Novixel's The Crypto Boxer 
 # Version 0.01
 # April 7, 2021
 #
@@ -8,39 +8,20 @@
 import ConfigSetup as cfg 
 from Connect import CoinConnect
 import ViableTrade
+import SmartTrade as Smt
 import datetime
 import cbpro
 import time
 import os 
 
-product_id = "BTC-EUR" # Change ME To the pair you would like to watch
-LEFTA, RIGHTA = product_id.split("-")
-
+product_id = cfg.product_id # Temp
 isoNow = datetime.datetime.now().isoformat() 
-auth = CoinConnect().auth # Create The Connection, Get The Auth From That Connection And Store it
-
-def updateFunds():
-        funds = auth.get_accounts()
-        x = -1
-        for i in funds:
-            x += 1
-            for k,v in i.items():
-                if v == LEFTA:
-                    lefta = funds[x]
-                    for b,t in lefta.items():
-                        cfg.SaveLeftAccount(str(b),str(t))
-                elif v == RIGHTA:
-                    righta = funds[x]
-                    for u,d in righta.items():
-                        cfg.SaveRightAccount(str(u),str(d))
-
-def updateTick():
-        tick = auth.get_product_ticker(product_id)
-        for k,v in tick.items():
-            cfg.SaveTicker(str(k), str(v))
+Coin = CoinConnect()  # Create The Connection,
+auth = Coin.auth  #Get The Auth From That Connection And Store it
 
 def StartLoop(x):
     count = 0
+    Smt.updateTick() # Fresh data!!
     while x > 0 or x < 0: # Forever Loop if 0
         x -= 1
         count += 1
@@ -48,8 +29,10 @@ def StartLoop(x):
         print("\n\tStep 1 - Gather Data\n")
         time.sleep(.33)
 
-        updateTick()
-        updateFunds()
+        Smt.updateTick()
+        Smt.updateFunds()
+
+        
         mTime = auth.get_time() # 2021-04-07T21:19:25.295Z
         print("\tCurrent Time:\t", isoNow)
         print("\tMarket Time:\t", mTime["iso"])
@@ -58,16 +41,17 @@ def StartLoop(x):
         print("\n\tStep 2 - Process Data & Calculate trade\n")
         time.sleep(.33)
 
-        print("If the Current Price is 1 BTC For",cfg.ReadTICKER("price"),RIGHTA)
+
+
         time.sleep(.33)
-        print("Check if we have enough funds available for our trade")
+        print("Check available funds\n")
         print(cfg.ReadLEFTaccount("available"),cfg.ReadLEFTaccount("currency"))
         print(cfg.ReadRIGHTaccount("available"),cfg.ReadRIGHTaccount("currency"))
-        print("if we do! is the trade Viable, Else: We wait for market to change",)
         time.sleep(.33)
 
-        print("Checking if the market is viable for trade")
 
+
+        print("Checking if the market is viable for trade")
         mva = ViableTrade.GetData(15)
         print("Current Price:",cfg.ReadTICKER("price"))
         time.sleep(.33)
@@ -76,10 +60,24 @@ def StartLoop(x):
         else:
             print("Moving Avg is Below The Current Price")
         time.sleep(.33)
-        print("\n\tStep 3 - Trade Time!\n")
+
+
+
+        print("\n\tStep 3 - Trade Time!\n") # Magic time
         time.sleep(.33)
 
-        print("\n INSERT TRADE CONSOLE OUTPUT HERE! \n")
+        side, last = Smt.getLastTrade() # GET LAST TRADE
+        
+        Smt.updateTick()
+
+        if side == 'buy': # simple but very effective way to ensure we alternate our trades
+            print("our last trade was a",side)
+            mytrade = Smt.sellTrade()
+        else:
+            print("our last trade was a",side)
+            mytrade = Smt.buyTrade()
+
+        print(mytrade) # print last trade made for us
         time.sleep(.33)
         
         print("\n\tWaiting..")
@@ -95,7 +93,7 @@ def main(auth):
     mTime = auth.get_time() # 2021-04-07T21:19:25.295Z
     print("Market Time:", mTime["iso"])
     time.sleep(.33)
-    StartLoop(input("How Many Times Should We loop?(int)\n"))
+    StartLoop(1)
     
 
 
