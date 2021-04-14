@@ -1,17 +1,17 @@
 # lets get some market data
 
-# Historical records for say 6 months
-
-# Moving Avg Calculation
-
-# other KPI's
-
-import ConfigSetup as cfg
 from configparser import ConfigParser
-from Boxer import auth, product_id
-import datetime
+from Connect import CoinConnect as CC
+import ConfigSetup as cfg
 from time import sleep
+import datetime
 import os
+
+product_id = cfg.product_id
+LEFTA, RIGHTA = cfg.product_id.split("-")
+
+Coin = CC()
+auth = Coin.auth
 
 datPath = (cfg.path + "\data.ini")
 
