@@ -8,7 +8,6 @@
 import ConfigSetup as cfg
 from Connect import CoinConnect as CC
 
-LEFTA, RIGHTA = cfg.product_id.split("-")
 lasttrademade = 0.0
 
 Coin = CC()
@@ -23,6 +22,7 @@ def getLastTrade():
     return lastside, float(lastprice)
 
 def updateFunds():
+        LEFTA, RIGHTA = cfg.product_id.split("-")
         funds = auth.get_accounts()
         x = -1
         for i in funds:

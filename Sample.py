@@ -6,11 +6,13 @@
 #
 
 # Get the bot
+from ConfigSetup import product_id
 import TheBot
 # we always need the cfg
 
 # Set Up Your Test
-mypair = "BTC-USDC"
+mypair = "BTC-EUR"
+product_id = mypair  # < We Set this as a constant in out Config File!
 myLoops = 0 # 0 will loop forever
 
 mybot = TheBot.BOT(mypair) # Create the bot with your selected currency pair

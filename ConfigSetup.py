@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 from configparser import ConfigParser
 
-product_id = "BTC-USDC" # temp
+product_id = str # temp
 
 # Lets build a few configurable setting for the program!
 
