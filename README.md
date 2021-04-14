@@ -1,10 +1,10 @@
 # BitcoinBoxer
-    The "Bitcoin Boxer"! 
+    The Bitcoin Boxer! 
     
     A custom built crypto currency trading algorithm designed to trade automaticly on the Coinbase Pro Exchange.
     
     Designed by Simon
-    Created by Novixel Development Solutions - Built by Novixel
+    Built by Novixel
     
     
     Step 1:
@@ -30,7 +30,9 @@
         
     
     Step 4:
-        Run 'boxer.py' with python3 ( python3 boxer.py )<-- in terminal or cmd prompt/ps
+        Open up Sample.py with your text editor of choice to change loops and product id/ currency pair
+        Open the terminal and cd to that files directory
+        Run 'Sample.py' with python3 ( python3 sample.py )<-- in terminal or cmd prompt/ps
         
     Step 5:
         Enter Your Api Key, 
