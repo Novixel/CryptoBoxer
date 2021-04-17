@@ -1,37 +1,42 @@
 # Novixel's Connect To Coinbase - The Bitcoin Boxer
-# Version 0.02 - Pre-Release - Beta Testing
-# April 14, 2021
+# Version 1 - First Official Release - 
+# April 17, 2021
 #
 # Connect.py
 #
-import cbpro
 import ConfigSetup as cfg
+import cbpro
 import os
-from time import sleep
 
+# Coinbase Connection For Our Config Data
 class CoinConnect:
 
+    # This will do everything involving the coinbase api!
     auth = None
 
-    def __init__(self): # Set up
-
-        cfg.BuildBotNest() # Build directory for our data and config files
+    def __init__(self): # Set up on creation
+        # Build directory for our config file if not already done
+        cfg.BuildBotNest() 
 
         if os.path.isfile(cfg.pathStr): # if file is a file! We continue
-            sleep(0.33)
+            pass # File was found sooo all is well 
         else: 
             print("\nConfig File Not Found!\nBuilding Setup File!\n") # else: we make a file
             cfg.BuildBotSettings()
-            print("The Config File Was Created!\n")
+            print("\nThe Config File Was Created!\n")
 
-        if cfg.ReadConfig("key") == "CoinbaseProAPI key": # Set your api key,
+        # This set Our API Keys for the Coinbase Pro account we want to use.
+
+        # Set your api key --------- if not already set
+        if cfg.ReadConfig("key") == "CoinbaseProAPI key": 
             key = input("Enter API KEY:\n")
             secret = input("Enter API SECRET:\n")
             passphrase = input("Enter API PASSPHRASE:\n")
             cfg.SaveNewApi(key,secret,passphrase)
-        else:                                           # Read your already set key
+        else: # Read your already set key
             key = cfg.ReadConfig("key")
             secret = cfg.ReadConfig("b64secret")
             passphrase = cfg.ReadConfig("passphrase")
 
+        # Create a authenticated client for the coinbase api
         self.auth = cbpro.AuthenticatedClient(key,secret,passphrase)

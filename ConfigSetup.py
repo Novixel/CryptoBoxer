@@ -1,6 +1,6 @@
 # Novixel's Config File Setup - The Bitcoin Boxer
-# Version 0.02 - Pre-Release - Beta Testing
-# April 14, 2021
+# Version 1 - First Official Release - 
+# April 17, 2021
 #
 # ConfigSetup.py
 #
@@ -8,11 +8,12 @@ import os
 from pathlib import Path
 from configparser import ConfigParser
 
-product_id = str # temp
+# This is our VIP constant global variable!
+product_id = str
 
 # Lets build a few configurable setting for the program!
 
-# Step 1 (Build Directory)
+# (Build Directory)
         # Build A place for the bots config files to be stored 
 def BuildBotNest():
     fullPath = os.path.realpath(__file__) # Get Exact Path to this file
@@ -26,63 +27,71 @@ path = str(BuildBotNest()) # we need this for all the settings :)
 
 pathStr = (path + '\config.ini') # create the file string for repeat
 
-# Step 2 (Build Config File)
+# (Build Config File)
         # Build a config file in that folder we just made for later use.
 def BuildBotSettings():
     config_object = ConfigParser()
     config_object["API"] = {            
-        "key": "CoinbaseProAPI key",
-        "b64secret": "CoinbaseProAPI b64secret",
-        "passphrase": "CoinbaseProAPI passphrase"
+        "key"           :   "CoinbaseProAPI key",
+        "b64secret"     :   "CoinbaseProAPI b64secret",
+        "passphrase"    :   "CoinbaseProAPI passphrase"
     }
     config_object["TICKER"] = {
-        "trade_id" : "Trade ID Number",
-        "price" : "Current Price",
-        "size" : "0.01019058",
-        "time" : "2021-04-08T08:35:54.751006Z",
-        "bid" : "48101.39",
-        "ask" : "48115.5",
-        "volume" : "1691.61862457"
+            "trade_id"  :   "Trade ID Number",
+            "price"     :   "Current Price",
+            "size"      :   "0.000000000000000",
+            "time"      :   "2021-05-01T12:00:00.578544Z",
+            "bid"       :   "0.000000000000000",
+            "ask"       :   "0.000000000000000",
+            "volume"    :   "0.000000000000000"
     }
     config_object["DAYSTATS"] = {
-        "open": "6745.00000000", 
-        "high": "7292.11000000", 
-        "low": "6650.00000000", 
-        "volume": "26185.51325269", 
-        "last": "6813.19000000", 
-        "volume_30day": "1019451.11188405"
+        "open"          :   "0.000000000000000", 
+        "high"          :   "0.000000000000000", 
+        "low"           :   "0.000000000000000", 
+        "volume"        :   "0.000000000000000", 
+        "last"          :   "0.000000000000000", 
+        "volume_30day"  :   "0.000000000000000"
     }
     config_object["LEFTACCOUNT"] = {
-        'id': 'Coin account id', 
-        'currency': 'BTC', 
-        'balance': '0.0003000058416290', 
-        'hold': '0.0000699178500000', 
-        'available': '0.000230087991629', 
-        'profile_id': 'profile id', 
-        'trading_enabled': "True"
+        'id'                :   'Base account id', 
+        'currency'          :   'base', 
+        'balance'           :   '0.0000000000000000', 
+        'hold'              :   '0.000000000000000', 
+        'available'         :   '0.0000000000000', 
+        'profile_id'        :   'profile id', 
+        'trading_enabled'   :   "bool"
     }
     config_object["RIGHTACCOUNT"] = {
-        'id': 'Coin account id', 
-        'currency': 'USDC', 
-        'balance': '100.00', 
-        'hold': '0.0000699178500000', 
-        'available': '100.00', 
-        'profile_id': 'profile id', 
-        'trading_enabled': "True"
+        'id'                :   'Quote account id', 
+        'currency'          :   'quote', 
+        'balance'           :   '0.000000000000000', 
+        'hold'              :   '0.000000000000000', 
+        'available'         :   '0.000000000000000', 
+        'profile_id'        :   'profile id', 
+        'trading_enabled'   :   "bool"
     }
     config_object["LASTTRADE"] = {
-        "time": "2014-11-07T22:19:28.578544Z",
-        "trade_id": "74",
-        "price": "10.00000000",
-        "size": "0.01000000",
-        "side": "buy"
+        "time"          :   "2021-05-01T12:00:00.578544Z",
+        "trade_id"      :   "000",
+        "price"         :   "0.000000000000000",
+        "size"          :   "0.000000000000000",
+        "side"          :   "side"
     }
+    config_object["PROFITS"] = {
+        "start_time"        :   "2021-05-01T12:00:00.578544Z",
+        "start_total"       :   "0.000000000000000",
+        "current_total"     :   "0.000000000000000",
+        "profit"            :   "0.000000000000000",
+    }
+
     #Write to a file!!
     with open(pathStr,'w') as conf:
         config_object.write(conf)
 
-# Step 3 (Edit That Config File)
+# (Edit That Config File)
         # Save to new data to The Config File we just made
+        # these need to be compacted in to one function
 def SaveNewApi(key,b64secret,passphrase):
     c = ConfigParser()
     c.read(pathStr)
@@ -140,8 +149,18 @@ def SaveTrade(x , d ):
     with open(pathStr, 'w') as conf:
         c.write(conf)
 
-# Step 4 (Read That Config File)
+def SaveProfit(x , d ):
+    c = ConfigParser()
+    c.read(pathStr)
+    #Get the api from config
+    profit = c["PROFITS"]
+    profit[str(x)] = d
+    with open(pathStr, 'w') as conf:
+        c.write(conf)
+
+# (Read That Config File)
 # Read the file and assign variables to the values
+# these need to be compacted in to one function
 def ReadConfig(x):
     """x should be what you want from the config file as a string"""
     c = ConfigParser()
@@ -149,8 +168,15 @@ def ReadConfig(x):
     #Get Info from config
     API = c["API"]
     return API[x]
-    
-# 100th line for out config file markinfo = c["MARKETINFO"]
+
+def ReadProfit(x):
+    """x should be what you want from the config file as a string"""
+    c = ConfigParser()
+    c.read(pathStr)
+    #Get Info from config
+    PROFITS = c["PROFITS"]
+    return PROFITS[x]
+
 def ReadLASTTRADE(x):
     """x = 'price',etc """
     c = ConfigParser()

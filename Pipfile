@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 cbpro = "*"
+pymongo = "*"
+six = "*"
 
 [dev-packages]
 
